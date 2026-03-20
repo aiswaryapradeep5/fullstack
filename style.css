@@ -1,257 +1,90 @@
-@import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap');
-
-*, *::before, *::after {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
-
 body {
-  min-height: 100vh;
   display: flex;
-  align-items: center;
   justify-content: center;
-  background: #c8c8c8;
-  background-image:
-    repeating-linear-gradient(
-      45deg,
-      rgba(0,0,0,0.03) 0px,
-      rgba(0,0,0,0.03) 1px,
-      transparent 1px,
-      transparent 8px
-    );
-  font-family: 'Share Tech Mono', monospace;
+  align-items: center;
+  min-height: 100vh;
+  background: #c0c0c0;
+  margin: 0;
 }
 
-/* ── Outer body (casing shadow/depth) ── */
-.body-outer {
-  border-radius: 18px 18px 40px 40px;
-  padding: 5px;
-  background: linear-gradient(160deg, #b0b0b0 0%, #787878 100%);
-  box-shadow:
-    0 20px 60px rgba(0,0,0,0.5),
-    0 6px 12px rgba(0,0,0,0.4),
-    inset 0 1px 0 rgba(255,255,255,0.3);
+.calculator {
+  width: 260px;
+  background: #222;
+  border-radius: 16px;
+  padding: 16px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
 }
 
-/* ── Main plastic body ── */
-.body-inner {
-  width: 280px;
-  border-radius: 14px 14px 36px 36px;
-  background: linear-gradient(170deg, #4a4a4a 0%, #2c2c2c 50%, #1e1e1e 100%);
-  padding: 18px 16px 0 16px;
-  box-shadow:
-    inset 0 2px 4px rgba(255,255,255,0.08),
-    inset 0 -2px 4px rgba(0,0,0,0.4);
-  position: relative;
-  overflow: hidden;
-}
-
-/* Subtle plastic texture highlight */
-.body-inner::before {
-  content: '';
-  position: absolute;
-  top: 0; left: 0; right: 0;
-  height: 45%;
-  background: linear-gradient(180deg, rgba(255,255,255,0.05) 0%, transparent 100%);
-  border-radius: 14px 14px 0 0;
-  pointer-events: none;
-}
-
-/* ── Brand label ── */
-.brand {
-  display: flex;
-  justify-content: space-between;
-  align-items: baseline;
-  padding: 0 4px 10px;
-}
-.brand-name {
-  font-size: 20px;
-  font-weight: 900;
-  letter-spacing: 4px;
-  color: #e0e0e0;
-  font-family: Arial Black, sans-serif;
-  text-shadow: 0 1px 2px rgba(0,0,0,0.5);
-}
-.brand-model {
-  font-size: 11px;
-  color: #888;
-  letter-spacing: 2px;
-  font-family: Arial, sans-serif;
-}
-
-/* ── Screen bezel ── */
-.screen-bezel {
-  background: #111;
-  border-radius: 6px;
-  padding: 6px;
-  margin-bottom: 14px;
-  box-shadow:
-    inset 0 3px 8px rgba(0,0,0,0.9),
-    inset 0 1px 3px rgba(0,0,0,0.6),
-    0 1px 0 rgba(255,255,255,0.05);
-  border: 1px solid #000;
-}
-
-/* ── LCD Screen ── */
+/* Screen */
 .screen {
   background: #a8b89a;
-  background-image: linear-gradient(180deg, #b2c2a8 0%, #9aaa90 100%);
-  border-radius: 3px;
-  padding: 10px 12px 8px;
-  min-height: 72px;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  align-items: flex-end;
-  box-shadow:
-    inset 0 2px 6px rgba(0,0,0,0.35),
-    inset 0 0 20px rgba(0,0,0,0.1);
-  position: relative;
-  overflow: hidden;
-}
-
-/* LCD scanline overlay */
-.screen::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: repeating-linear-gradient(
-    180deg,
-    transparent 0px,
-    transparent 3px,
-    rgba(0,0,0,0.04) 3px,
-    rgba(0,0,0,0.04) 4px
-  );
-  pointer-events: none;
-}
-
-.screen-expr {
-  font-size: 11px;
-  color: #4a5e40;
-  min-height: 16px;
-  text-align: right;
-  letter-spacing: 0.5px;
-  opacity: 0.85;
-}
-
-.screen-result {
-  font-size: 34px;
   color: #1a2e14;
+  font-size: 32px;
+  font-family: monospace;
   text-align: right;
-  line-height: 1.1;
-  letter-spacing: 2px;
-  text-shadow: 0 1px 0 rgba(255,255,255,0.2);
+  padding: 12px;
+  border-radius: 6px;
+  margin-bottom: 14px;
+  min-height: 56px;
   word-break: break-all;
+  box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.3);
 }
 
-/* ── Keypad ── */
-.keypad {
+/* Button grid */
+.buttons {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 8px;
-  padding-bottom: 16px;
 }
 
-/* ── Base key style ── */
-.key {
+/* All buttons */
+button {
+  height: 52px;
+  font-size: 18px;
   border: none;
   border-radius: 6px;
-  height: 52px;
-  font-family: 'Share Tech Mono', monospace;
-  font-size: 17px;
   cursor: pointer;
-  position: relative;
-  transition: transform 0.07s ease, box-shadow 0.07s ease;
-  user-select: none;
-  -webkit-tap-highlight-color: transparent;
-  outline: none;
-
-  /* 3D raised effect */
-  box-shadow:
-    0 5px 0 rgba(0,0,0,0.5),
-    0 6px 3px rgba(0,0,0,0.3),
-    inset 0 1px 0 rgba(255,255,255,0.15);
+  background: #d0d0d0;
+  color: #111;
+  box-shadow: 0 4px 0 #888;
+  transition: transform 0.08s, box-shadow 0.08s;
 }
 
-.key:active, .key.pressed {
+button:active {
   transform: translateY(4px);
-  box-shadow:
-    0 1px 0 rgba(0,0,0,0.5),
-    0 2px 2px rgba(0,0,0,0.2),
-    inset 0 1px 0 rgba(0,0,0,0.2);
+  box-shadow: 0 0px 0 #888;
 }
 
-/* ── Number keys — light grey ── */
-.key-num {
-  background: linear-gradient(180deg, #d8d8d8 0%, #b8b8b8 100%);
-  color: #1a1a1a;
-  border-top: 1px solid rgba(255,255,255,0.6);
-}
-.key-num:hover {
-  background: linear-gradient(180deg, #e2e2e2 0%, #c4c4c4 100%);
-}
-
-/* ── Function keys (AC, del, %) — dark grey ── */
-.key-fn {
-  background: linear-gradient(180deg, #5a5a5a 0%, #3a3a3a 100%);
-  color: #f0f0f0;
-  font-size: 14px;
-  border-top: 1px solid rgba(255,255,255,0.15);
-  box-shadow:
-    0 5px 0 rgba(0,0,0,0.6),
-    0 6px 3px rgba(0,0,0,0.3),
-    inset 0 1px 0 rgba(255,255,255,0.12);
-}
-.key-fn:hover {
-  background: linear-gradient(180deg, #666 0%, #444 100%);
+/* Operator buttons */
+button:nth-child(4),
+button:nth-child(8),
+button:nth-child(12),
+button:nth-child(16) {
+  background: #f5a623;
+  color: white;
+  box-shadow: 0 4px 0 #a06800;
 }
 
-/* ── Operator keys — orange/amber ── */
-.key-op {
-  background: linear-gradient(180deg, #f5a623 0%, #c97d00 100%);
-  color: #fff;
-  font-size: 20px;
-  font-weight: bold;
-  border-top: 1px solid rgba(255,255,255,0.3);
-  box-shadow:
-    0 5px 0 rgba(100,50,0,0.6),
-    0 6px 3px rgba(0,0,0,0.3),
-    inset 0 1px 0 rgba(255,255,255,0.2);
-  text-shadow: 0 1px 2px rgba(0,0,0,0.3);
-}
-.key-op:hover {
-  background: linear-gradient(180deg, #ffb535 0%, #d98d10 100%);
+/* AC and delete buttons */
+button:nth-child(1),
+button:nth-child(2),
+button:nth-child(3) {
+  background: #555;
+  color: #eee;
+  box-shadow: 0 4px 0 #222;
 }
 
-/* ── Equals key — blue, spans 1 col ── */
-.key-eq {
-  background: linear-gradient(180deg, #3a8fe8 0%, #1a5fb4 100%);
-  color: #fff;
-  font-size: 22px;
-  border-top: 1px solid rgba(255,255,255,0.3);
-  box-shadow:
-    0 5px 0 rgba(0,30,100,0.6),
-    0 6px 3px rgba(0,0,0,0.3),
-    inset 0 1px 0 rgba(255,255,255,0.2);
-  text-shadow: 0 1px 2px rgba(0,0,0,0.3);
-}
-.key-eq:hover {
-  background: linear-gradient(180deg, #4fa0f8 0%, #2a6fc8 100%);
-}
-
-/* ── Zero key spans 2 columns ── */
-.key-zero {
+/* Zero button */
+.zero {
   grid-column: span 2;
   text-align: left;
-  padding-left: 20px;
+  padding-left: 18px;
 }
 
-/* ── Bottom lip / rounded base ── */
-.bottom-lip {
-  height: 28px;
-  margin: 0 -16px;
-  background: linear-gradient(180deg, #1a1a1a 0%, #141414 100%);
-  border-radius: 0 0 32px 32px;
-  box-shadow: inset 0 2px 4px rgba(0,0,0,0.4);
+/* Equals button */
+.equals {
+  background: #3a8fe8;
+  color: white;
+  font-size: 22px;
+  box-shadow: 0 4px 0 #1a4f9a;
 }

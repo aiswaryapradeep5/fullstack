@@ -2,66 +2,43 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Calculator</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
 
-  <div class="body-outer">
-    <div class="body-inner">
+  <div class="calculator">
 
-      <!-- Brand -->
-      <div class="brand">
-        <span class="brand-name">CASIO</span>
-        <span class="brand-model">fx-100</span>
-      </div>
+    <!-- Screen -->
+    <div class="screen" id="screen">0</div>
 
-      <!-- LCD Screen -->
-      <div class="screen-bezel">
-        <div class="screen">
-          <div class="screen-expr" id="expression">&nbsp;</div>
-          <div class="screen-result" id="result">0</div>
-        </div>
-      </div>
+    <!-- Buttons -->
+    <div class="buttons">
+      <button onclick="clearScreen()">AC</button>
+      <button onclick="deleteLast()">⌫</button>
+      <button onclick="press('%')">%</button>
+      <button onclick="press('/')">÷</button>
 
-      <!-- Buttons -->
-      <div class="keypad">
+      <button onclick="press('7')">7</button>
+      <button onclick="press('8')">8</button>
+      <button onclick="press('9')">9</button>
+      <button onclick="press('*')">×</button>
 
-        <!-- Row 1 -->
-        <button class="key key-fn" data-action="clear">AC</button>
-        <button class="key key-fn" data-action="delete">⌫</button>
-        <button class="key key-fn" data-value="%">%</button>
-        <button class="key key-op" data-value="/">÷</button>
+      <button onclick="press('4')">4</button>
+      <button onclick="press('5')">5</button>
+      <button onclick="press('6')">6</button>
+      <button onclick="press('-')">−</button>
 
-        <!-- Row 2 -->
-        <button class="key key-num" data-value="7">7</button>
-        <button class="key key-num" data-value="8">8</button>
-        <button class="key key-num" data-value="9">9</button>
-        <button class="key key-op" data-value="*">×</button>
+      <button onclick="press('1')">1</button>
+      <button onclick="press('2')">2</button>
+      <button onclick="press('3')">3</button>
+      <button onclick="press('+')">+</button>
 
-        <!-- Row 3 -->
-        <button class="key key-num" data-value="4">4</button>
-        <button class="key key-num" data-value="5">5</button>
-        <button class="key key-num" data-value="6">6</button>
-        <button class="key key-op" data-value="-">−</button>
-
-        <!-- Row 4 -->
-        <button class="key key-num" data-value="1">1</button>
-        <button class="key key-num" data-value="2">2</button>
-        <button class="key key-num" data-value="3">3</button>
-        <button class="key key-op" data-value="+">+</button>
-
-        <!-- Row 5 -->
-        <button class="key key-num key-zero" data-value="0">0</button>
-        <button class="key key-num" data-value=".">.</button>
-        <button class="key key-eq" data-action="equals">=</button>
-
-      </div>
-
-      <!-- Bottom lip -->
-      <div class="bottom-lip"></div>
+      <button class="zero" onclick="press('0')">0</button>
+      <button onclick="press('.')">.</button>
+      <button class="equals" onclick="calculate()">=</button>
     </div>
+
   </div>
 
   <script src="script.js"></script>

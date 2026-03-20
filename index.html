@@ -1,15 +1,69 @@
 <!DOCTYPE html>
-<html>
-    <head>
-        <title>Bulb ON OFF</title>
-        <link rel="stylesheet" href="style.css">
-        <body>
-            <h1>Bulb ON//OFF Project</h1>
-            <img id="bulb" src="https://www.w3schools.com/js/pic_bulboff.gif" alt="Bulb">
-            <br><br>
-            <button onclick="turnOn()">Turn ON</button>
-            <button onclick="turnOff()">Turn OFF</button>
-            <script src="script.js"></script>
-        </body>
-    </head>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Calculator</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <div class="body-outer">
+    <div class="body-inner">
+
+      <!-- Brand -->
+      <div class="brand">
+        <span class="brand-name">CASIO</span>
+        <span class="brand-model">fx-100</span>
+      </div>
+
+      <!-- LCD Screen -->
+      <div class="screen-bezel">
+        <div class="screen">
+          <div class="screen-expr" id="expression">&nbsp;</div>
+          <div class="screen-result" id="result">0</div>
+        </div>
+      </div>
+
+      <!-- Buttons -->
+      <div class="keypad">
+
+        <!-- Row 1 -->
+        <button class="key key-fn" data-action="clear">AC</button>
+        <button class="key key-fn" data-action="delete">⌫</button>
+        <button class="key key-fn" data-value="%">%</button>
+        <button class="key key-op" data-value="/">÷</button>
+
+        <!-- Row 2 -->
+        <button class="key key-num" data-value="7">7</button>
+        <button class="key key-num" data-value="8">8</button>
+        <button class="key key-num" data-value="9">9</button>
+        <button class="key key-op" data-value="*">×</button>
+
+        <!-- Row 3 -->
+        <button class="key key-num" data-value="4">4</button>
+        <button class="key key-num" data-value="5">5</button>
+        <button class="key key-num" data-value="6">6</button>
+        <button class="key key-op" data-value="-">−</button>
+
+        <!-- Row 4 -->
+        <button class="key key-num" data-value="1">1</button>
+        <button class="key key-num" data-value="2">2</button>
+        <button class="key key-num" data-value="3">3</button>
+        <button class="key key-op" data-value="+">+</button>
+
+        <!-- Row 5 -->
+        <button class="key key-num key-zero" data-value="0">0</button>
+        <button class="key key-num" data-value=".">.</button>
+        <button class="key key-eq" data-action="equals">=</button>
+
+      </div>
+
+      <!-- Bottom lip -->
+      <div class="bottom-lip"></div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
 </html>

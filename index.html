@@ -1,15 +1,41 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>Bulb ON OFF</title>
-        <link rel="stylesheet" href="style.css">
-        <body>
-            <h1>Bulb ON//OFF Project</h1>
-            <img id="bulb" src="https://www.w3schools.com/js/pic_bulboff.gif" alt="Bulb">
-            <br><br>
-            <button onclick="turnOn()">Turn ON</button>
-            <button onclick="turnOff()">Turn OFF</button>
-            <script src="script.js"></script>
-        </body>
-    </head>
+<head>
+    <title>Smart Brains</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<h1>Study Planner</h1>
+<a href="dashboard.html">
+    <button>📊 View Progress</button>
+</a>
+
+<div class="container">
+    <input type="text" id="subject" placeholder="Subject">
+    
+    <select id="day">
+        <option>Monday</option>
+        <option>Tuesday</option>
+        <option>Wednesday</option>
+        <option>Thursday</option>
+        <option>Friday</option>
+        <option>Saturday</option>
+        <option>Sunday</option>
+    </select>
+
+    <input type="number" id="hours" placeholder="Hours">
+
+    <button onclick="addTask()">Add Task</button>
+</div>
+
+<h2 style="color:rgb(37, 35, 35);">📅 Weekly Plan</h2>
+<ul id="taskList"></ul>
+
+<h2>⏱ Focus Timer</h2>
+<div id="timer">25:00</div>
+<button onclick="startTimer()">Start Pomodoro</button>
+
+<script src="script.js"></script>
+</body>
 </html>

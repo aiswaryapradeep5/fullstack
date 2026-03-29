@@ -1,14 +1,80 @@
-body{
-    text-align: center;
-    font-family: arial;
-    background-color: #f0f0f0;
+body {
+    font-family: 'Segoe UI', sans-serif;
+    background: linear-gradient(135deg, #ffecd2, #fcb69f, #ffecd2);
+    min-height: 100vh;
+    color: #333;
 }
-img{
-    width: 150px;
+
+h1 {
+    color: rgb(32, 30, 30);
+    margin-top: 20px;
 }
-button{
-    padding: 10px 20px;
-    margin: 10px;
-    font-size: 16px;
+
+.container {
+    background: white;
+    padding: 20px;
+    margin: 20px auto;
+    width: 90%;
+    max-width: 500px;
+    border-radius: 10px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+}
+
+input, select {
+    width: 90%;
+    padding: 10px;
+    margin: 8px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+button {
+    padding: 10px 15px;
+    margin-top: 10px;
+    background: #717daf;
+    color: white;
+    border: none;
+    border-radius: 5px;
     cursor: pointer;
+    transition: 0.3s;
+}
+
+button:hover {
+    background: #667eea;
+}
+
+ul {
+    padding: 0;
+}
+
+li {
+    background: white;
+    margin: 10px auto;
+    padding: 15px;
+    width: 90%;
+    max-width: 500px;
+    border-radius: 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+.task-info {
+    text-align: left;
+}
+
+.delete-btn {
+    background: red;
+    border: none;
+    padding: 6px 10px;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#timer {
+    font-size: 40px;
+    color: white;
+    margin: 20px;
 }

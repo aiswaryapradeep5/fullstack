@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Smart Brains - Dashboard</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Segoe UI', sans-serif; background: #f5f5f5; color: #333; }
+
+    nav {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 14px 24px; background: white; border-bottom: 1px solid #e5e5e5;
+      position: sticky; top: 0; z-index: 100;
+    }
+    nav h1 {
+      font-size: 20px; font-weight: 700;
+      background: linear-gradient(to right, #f093fb, #f5576c);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    }
+    .nav-right { display: flex; align-items: center; gap: 12px; }
+    .btn { padding: 8px 16px; border-radius: 8px; border: none; cursor: pointer; font-size: 13px; font-weight: 600; transition: all 0.2s; }
+    .btn:hover { opacity: 0.85; transform: translateY(-1px); }
+    .btn-primary { background: linear-gradient(135deg, #f093fb, #f5576c); color: white; }
+    .btn-outline { background: white; border: 1px solid #e5e5e5; color: #333; }
+    .user-badge { display: flex; align-items: center; gap: 8px; font-size: 14px; font-weight: 600; }
+    .user-avatar {
+      width: 32px; height: 32px; border-radius: 50%;
+      background: linear-gradient(135deg, #f093fb, #f5576c);
+      display: flex; align-items: center; justify-content: center;
+      color: white; font-size: 14px; font-weight: 700;
+    }
+
+    .stats-bar { display: flex; gap: 16px; padding: 12px 24px; background: white; border-bottom: 1px solid #e5e5e5; }
+    .stat-pill { display: flex; align-items: center; gap: 6px; font-size: 13px; color: #555; }
+    .stat-dot { width: 10px; height: 10px; border-radius: 50%; }
+
+    .calendar-wrapper { overflow-y: auto; background: white; margin: 24px; border-radius: 12px; box-shadow: 0 2px 12px rgba(0,0,0,0.06); }
+    .calendar-header, .calendar-grid { display: grid; grid-template-columns: 60px repeat(7, 1fr); }
+    .calendar-header { border-bottom: 2px solid #f0f0f0; position: sticky; top: 0; background: white; z-index: 10; }
+
+    .cal-header-cell { padding: 12px 8px; text-align: center; border-left: 1px solid #f0f0f0; }
+    .day-name { font-size: 12px; color: #aaa; font-weight: 500; text-transform: uppercase; letter-spacing: 0.5px; }
+    .day-num { font-size: 22px; font-weight: 700; color: #333; margin-top: 2px; }
+    .today .day-num { background: linear-gradient(135deg, #f093fb, #f5576c); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+
+    .time-slot { font-size: 11px; color: #bbb; text-align: right; padding: 4px 8px 0; height: 60px; border-bottom: 1px solid #f5f5f5; }
+    .day-col { border-left: 1px solid #f0f0f0; border-bottom: 1px solid #f5f5f5; height: 60px; padding: 4px; }
+
+    .task-block { border-radius: 6px; padding: 4px 8px; margin: 2px 0; font-size: 12px; font-weight: 500; cursor: pointer; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+    .task-block:hover { opacity: 0.8; }
+    .c0{background:#ffd6e0;color:#c0394b} .c1{background:#d0e8ff;color:#1a6cb5}
+    .c2{background:#d4f5e2;color:#1a7a45} .c3{background:#fff3cd;color:#8a6500}
+    .c4{background:#e8d5fb;color:#6a2fa0} .c5{background:#ffe5cc;color:#a04a00}
+    .c6{background:#ccf5f5;color:#007a7a}
+  </style>
+</head>
+<body>
+
+<nav>
+  <h1>🧠 Smart Brains</h1>
+  <div class="nav-right">
+    <div class="user-badge">
+      <div class="user-avatar" id="userAvatar">U</div>
+      <span id="userName"></span>
+    </div>
+    <button class="btn btn-primary" onclick="location.href='index.html'">➕ Add Task</button>
+    <button class="btn btn-outline" onclick="logout()">Logout 🚪</button>
+  </div>
+</nav>
+
+<div class="stats-bar">
+  <div class="stat-pill"><div class="stat-dot" style="background:#f5576c"></div><span id="totalCount">0 Total Tasks</span></div>
+  <div class="stat-pill"><div class="stat-dot" style="background:#f093fb"></div><span id="pendingCount">0 Pending</span></div>
+  <div class="stat-pill"><div class="stat-dot" style="background:#4ade80"></div><span id="completedCount">0 Completed</span></div>
+</div>
+
+<div class="calendar-wrapper">
+  <div class="calendar-header" id="calHeader"><div class="cal-header-cell"></div></div>
+  <div class="calendar-grid" id="calGrid"></div>
+</div>
+
+<script>
+  const token = localStorage.getItem("token");
+  const username = localStorage.getItem("username");
+  const DAYS = ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"];
+  const HOURS = Array.from({length: 13}, (_, i) => i + 8);
+
+  if (!token) location.href = "login.html";
+
+  document.getElementById("userName").innerText = username || "User";
+  document.getElementById("userAvatar").innerText = (username || "U")[0].toUpperCase();
+
+  function logout() {
+    ["token","username"].forEach(k => localStorage.removeItem(k));
+    location.href = "login.html";
+  }
+
+  // Build header
+  const today = new Date();
+  const weekStart = new Date(today);
+  weekStart.setDate(today.getDate() - ((today.getDay() + 6) % 7));
+
+  DAYS.forEach((day, i) => {
+    const d = new Date(weekStart);
+    d.setDate(weekStart.getDate() + i);
+    const cell = Object.assign(document.createElement("div"), {
+      className: "cal-header-cell" + (d.toDateString() === today.toDateString() ? " today" : "")
+    });
+    cell.innerHTML = `<div class="day-name">${day.slice(0,3).toUpperCase()}</div><div class="day-num">${d.getDate()}</div>`;
+    document.getElementById("calHeader").appendChild(cell);
+  });
+
+  // Build grid
+  function buildGrid(tasks) {
+    const grid = document.getElementById("calGrid");
+    grid.innerHTML = "";
+    const byDay = Object.fromEntries(DAYS.map(d => [d, []]));
+    tasks.forEach(t => byDay[t.title]?.push(t));
+
+    HOURS.forEach(hour => {
+      grid.appendChild(Object.assign(document.createElement("div"), { className: "time-slot", innerText: `${hour}:00` }));
+      DAYS.forEach((day, i) => {
+        const cell = Object.assign(document.createElement("div"), { className: "day-col" });
+        byDay[day].filter((_, idx) => (idx % HOURS.length) + 8 === hour).forEach(t => {
+          cell.appendChild(Object.assign(document.createElement("div"), {
+            className: `task-block c${i}`,
+            innerText: `${t.subject} (${t.description}h)`,
+            title: `${t.subject} — ${t.description} hrs — ${t.status}`
+          }));
+        });
+        grid.appendChild(cell);
+      });
+    });
+  }
+
+  // Fetch & render
+  fetch("http://localhost:8080/api/tasks", { headers: { "Authorization": "Bearer " + token } })
+    .then(r => r.json())
+    .then(tasks => {
+      buildGrid(tasks);
+      const done = tasks.filter(t => t.status === "completed").length;
+      document.getElementById("totalCount").innerText = `${tasks.length} Total Tasks`;
+      document.getElementById("pendingCount").innerText = `${tasks.length - done} Pending`;
+      document.getElementById("completedCount").innerText = `${done} Completed`;
+    })
+    .catch(console.error);
+</script>
+
+</body>
+</html>

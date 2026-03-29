@@ -1,15 +1,46 @@
 <!DOCTYPE html>
-<html>
-    <head>
-        <title>Bulb ON OFF</title>
-        <link rel="stylesheet" href="style.css">
-        <body>
-            <h1>Bulb ON//OFF Project</h1>
-            <img id="bulb" src="https://www.w3schools.com/js/pic_bulboff.gif" alt="Bulb">
-            <br><br>
-            <button onclick="turnOn()">Turn ON</button>
-            <button onclick="turnOff()">Turn OFF</button>
-            <script src="script.js"></script>
-        </body>
-    </head>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Calculator</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <div class="calculator">
+
+    <!-- Screen -->
+    <div class="screen" id="screen">0</div>
+
+    <!-- Buttons -->
+    <div class="buttons">
+      <button onclick="clearScreen()">AC</button>
+      <button onclick="deleteLast()">⌫</button>
+      <button onclick="press('%')">%</button>
+      <button onclick="press('/')">÷</button>
+
+      <button onclick="press('7')">7</button>
+      <button onclick="press('8')">8</button>
+      <button onclick="press('9')">9</button>
+      <button onclick="press('*')">×</button>
+
+      <button onclick="press('4')">4</button>
+      <button onclick="press('5')">5</button>
+      <button onclick="press('6')">6</button>
+      <button onclick="press('-')">−</button>
+
+      <button onclick="press('1')">1</button>
+      <button onclick="press('2')">2</button>
+      <button onclick="press('3')">3</button>
+      <button onclick="press('+')">+</button>
+
+      <button class="zero" onclick="press('0')">0</button>
+      <button onclick="press('.')">.</button>
+      <button class="equals" onclick="calculate()">=</button>
+    </div>
+
+  </div>
+
+  <script src="script.js"></script>
+</body>
 </html>
